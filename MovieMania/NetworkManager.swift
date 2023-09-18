@@ -7,6 +7,7 @@
 
 import Foundation
 
+//MARK: - Movie List Request
 
 struct MovieListRequest {
     var request: URLRequest
@@ -26,6 +27,7 @@ struct MovieListRequest {
         request.timeoutInterval = 40
     }
     
+    //fetch API results then map results to FetechResults
     
     func fetchMovieListRequest(completion: @escaping(Result<FetchResults, Error>) -> Void){
         let dataTask = URLSession.shared.dataTask(with: request) { data, response, error in

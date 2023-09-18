@@ -7,6 +7,7 @@
 
 import Foundation
 
+//MARK: - JSON DATA
 
 struct FetchResults: Codable {
     let resultCount: Int?
@@ -60,4 +61,25 @@ struct MockMovieData {
     
     
     static let movies = [sampleMovie, sampleMovie]
+}
+
+//MARK: - Favorite Movies Manager
+// added a manager to handle with the favorite movies list
+// this is the only solution that I have found that would overcome the issue with button icon not updating but the list is  correctly updated
+class FavoriteMoviesManager: ObservableObject {
+    static let shared = FavoriteMoviesManager()
+    var favoriteMoviesList: [Int] = []
+    
+    init() {}
+    
+    func updateFavoriteList(for movieId: Int) {
+        print("#2 Favorite is toggled here")
+        if let index = favoriteMoviesList.firstIndex(where: { $0 == movieId}) {
+            favoriteMoviesList.remove(at: index)
+        } else {
+            favoriteMoviesList.append(movieId)
+        }
+        print(favoriteMoviesList)
+    }
+    
 }

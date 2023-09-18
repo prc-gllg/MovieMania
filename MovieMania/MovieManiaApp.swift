@@ -9,13 +9,12 @@ import SwiftUI
 
 @main
 struct MovieManiaApp: App {
-    let persistenceController = PersistenceController.shared
-
+    //singleton favorite list manager -- ensures that there is only one list of favorites
+    let favoriteMoviesManager = FavoriteMoviesManager.shared
     var body: some Scene {
         WindowGroup {
-//            ContentView()
-//                .environment(\.managedObjectContext, persistenceController.container.viewContext)
-            ContentView2()
+            ContentView()
+                .environmentObject(favoriteMoviesManager)
         }
     }
 }

@@ -7,25 +7,22 @@
 
 import Foundation
 
+//MARK: - Movie List View Model
 
 class MovieList_ViewModel: ObservableObject {
     @Published var movieList: [MovieDetail] = []
-    @Published var favoriteMoviesList: [Int] = [978943481, 975080816, 1128456722]
+    @Published var favoriteMoviesList: [Int] = []
+    private var favoriteMoviesManager: FavoriteMoviesManager
     
+    //initialization
+    init(favoriteMoviesManager: FavoriteMoviesManager) {
+        self.favoriteMoviesManager = favoriteMoviesManager
+    }
+    //checks if this movie is set as a favorite
     func isMovieFavorite(movie: MovieFetchResult) -> Bool {
-        return favoriteMoviesList.contains { $0 == movie.trackId }
+        return favoriteMoviesManager.favoriteMoviesList.contains { $0 == movie.trackId }
     }
-    
-    func toggleFavorite(for movieId: Int) {
-        print("#2 Favorite is toggled here")
-        if let index = favoriteMoviesList.firstIndex(where: { $0 == movieId}) {
-            favoriteMoviesList.remove(at: index)
-        } else {
-            favoriteMoviesList.append(movieId)
-        }
-        print(favoriteMoviesList)
-    }
-    
+    //fetch movies from the network manager (MovieListRequest)
     func fetchMovies() {
         MovieListRequest().fetchMovieListRequest { [self] result in
             switch result {
@@ -45,5 +42,4 @@ class MovieList_ViewModel: ObservableObject {
             }
         }
     }
-    
 }
